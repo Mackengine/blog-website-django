@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Blog</title>
+
+    <!-- Bootstrap -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
+
+    <!--Medium Style Editor-->
+    <script src="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/js/medium-editor.min.js"></script>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/css/medium-editor.min.css" type="text/css" media="screen" charset="utf-8">
+    <!-- Cutsom CSS -->
+    <link rel="stylesheet" href="{% static 'css/blog.css'%}">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Rubik+Mono+One|Crimson+Text" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-default navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+          data-target="#bs-nav-demo" aria-expanded="false">
+            <span class="sr-only">Toggle Navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{% url 'post_list'%}">The Blog</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-nav-demo">
+          <ul class="nav navbar-nav navbar-inverse">
+            <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="https://www.github.com">Github</a></li>
+            <li class="nav-item"><a class="nav-link" href="https://www.linkedin.com">LinkedIn</a></li>
+          </ul>
+
+          <ul class="nav navbar-nav navbar-inverse navbar-right">
+            {% if user.is_authenticated %}
+            <li>
+              <a href="{% url 'post_new'%}">New Post</a>
+            </li>
+            <li>
+              <a href="{% url 'post_draft_list'%}">Drafts</a>
+            </li>
+            <li>
+              <a href="{% url 'logout'%}">Log Out</a>
+            </li>
+            <li>
+              <a>Welcome: {{user.username}}</a>
+            </li>
+              {%else %}
+            <li> <a class="nav navbar-nav navbar-right" href="{% url 'login' %}"><span class="glyphicon glyphicon-user"></span></a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- content block -->
+    <div class="content container">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="blog_posts">
+            {% block content %}
+            {% endblock %}
+          </div
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
